@@ -1,3 +1,4 @@
+# Install and configure ngrok.
 class ngrok($dependencies, $home, $token, $url) {
 
   class { '::osbase': home => $home }
