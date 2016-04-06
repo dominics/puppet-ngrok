@@ -4,9 +4,11 @@ machine:
 
 test:
   pre:
-    - curl https://raw.githubusercontent.com/TheKevJames/puppettools/master/moduletest/runner.py > runner.py
+    - curl https://raw.githubusercontent.com/TheKevJames/puppettools/master/moduletest/runner.py > runner.py:
+        parallel: true
   override:
-    - python runner.py verbose
+    - python runner.py --parallel $CIRCLE_NODE_TOTAL $CIRCLE_NODE_INDEX :
+        parallel: true
   # post:
   #   - /opt/ngrok version
   #   - cat /home/ubuntu/.ngrok2/ngrok.yml
