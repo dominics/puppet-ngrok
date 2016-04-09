@@ -1,6 +1,6 @@
 class ngrok($dependencies, $home, $token, $url) {
 
-  include ::osbase
+  class { '::osbase': home => $home }
 
   ensure_packages($dependencies, { ensure => latest })
 
