@@ -1,5 +1,7 @@
 class ngrok($dependencies, $home, $token, $url) {
 
+  include ::osbase
+
   ensure_packages($dependencies, { ensure => latest })
 
   exec { 'retrieve_ngrok':
@@ -23,7 +25,10 @@ class ngrok($dependencies, $home, $token, $url) {
     target => '/opt/ngrok',
   }
 
-  file { "${home}/.config/ngrok": ensure => directory } ->
+  file { "${home}/.config/ngrok":
+    ensure  => directory,
+    require => File["${home}/.config"],
+  } ->
   file { "${home}/.config/ngrok/config.yml":
     ensure  => present,
     content => template('ngrok/config.erb'),
