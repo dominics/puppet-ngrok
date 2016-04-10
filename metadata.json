@@ -13,19 +13,12 @@
   ],
   "data_provider": "hiera",
   "operatingsystem_support": [
-    { "operatingsystem": "CentOS" },
+    { "operatingsystem": "Darwin" },
     { "operatingsystem": "Debian" },
-    { "operatingsystem": "OracleLinux" },
-    { "operatingsystem": "OSX" },
-    { "operatingsystem": "RedHat" },
-    { "operatingsystem": "Scientific" },
-    { "operatingsystem": "SLES" },
+    { "operatingsystem": "Fedora" },
     { "operatingsystem": "Ubuntu" }
   ],
   "requirements": [
-    {
-      "name": "puppet",
-      "version_requirement": ">= 4.0.0 < 5.0.0"
-    }
+    { "name": "puppet", "version_requirement": ">= 4.3.0 < 5.0.0" }
   ]
 }
