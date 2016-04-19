@@ -1,7 +1,7 @@
 # Install and configure ngrok.
 class ngrok($dependencies, $url, $home, $token = '') {  # lint:ignore:parameter_defaults
 
-  ensure_resources(file, "${home}/.config", { ensure => directory })
+  ensure_resource(file, "${home}/.config", { ensure => directory })
 
   ensure_packages($dependencies, { ensure => latest })
 
