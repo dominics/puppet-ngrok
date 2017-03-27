@@ -4,6 +4,8 @@
 - breaking: split the management of the config file to a define, so more than one user's config can be managed
 - breaking: no longer provide $dependencies parameter
 - major: add a dependency on puppet/archive for downloading and extracting the ngrok zip, supports checksums
+- minor: default value of ngrok::config::token is now undef
+- minor: added two new configuration values: `update`, and `web_addr`
 
 ## 1.1.0
 - bugfix: ensure config folder exists

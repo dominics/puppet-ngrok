@@ -1,6 +1,8 @@
 # Pass home dir as namevar to create a ngrok configuration
 define ngrok::config(
-  Optional[String] $token = ''
+  Optional[String]  $token    = undef,
+  Optional[String]  $web_addr = undef,
+  Optional[Boolean] $update   = undef
 ) {  # lint:ignore:parameter_defaults
   validate_absolute_path($name)
 
