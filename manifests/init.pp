@@ -1,27 +1,23 @@
 # Install and configure ngrok.
 class ngrok(
-  Array $dependencies,
   String $url,
-  String $home,
-  Optional[String] $token = ''
+  String $install_path = '/opt',
+  Optional[Hash] $archive_arguments = {}
 ) {  # lint:ignore:parameter_defaults
-  validate_absolute_path($home)
+  validate_absolute_path($install_path)
 
-  ensure_resource(file, "${home}/.config", { ensure => directory })
+  $binary_path = "${install_path}/ngrok"
 
-  ensure_packages($dependencies, { ensure => latest })
-
-  exec { 'retrieve_ngrok':
-    command => "/usr/bin/curl -s ${url} > /tmp/ngrok.zip",
-    creates => '/tmp/ngrok.zip',
-    require => Package['curl'],
-  } ~>
-  exec { 'unzip_ngrok':
-    command => '/usr/bin/unzip /tmp/ngrok.zip -d /opt',
-    creates => '/opt/ngrok',
-    require => [Exec['retrieve_ngrok'], Package['unzip']],
-  } ~>
-  file { '/opt/ngrok':
+  archive { '/tmp/ngrok.zip':
+    ensure       => 'present',
+    extract      => true,
+    extract_path => $install_path,
+    source       => $url,
+    creates      => $binary_path,
+    cleanup      => true,
+    *            => $archive_arguments;
+  } ->
+  file { $install_path:
     owner => root,
     group => root,
     mode  => '0755',
@@ -31,22 +27,4 @@ class ngrok(
     ensure => link,
     target => '/opt/ngrok',
   }
-
-  file { "${home}/.config/ngrok":
-    ensure  => directory,
-    require => File["${home}/.config"],
-  } ->
-  file { "${home}/.config/ngrok/config.yml":
-    ensure  => present,
-    content => template('ngrok/config.erb'),
-    mode    => '0644',
-  }
-
-  # ngrok does not support XDG. ngrok should support XDG.
-  file { "${home}/.ngrok2": ensure => directory } ->
-  file { "${home}/.ngrok2/ngrok.yml":
-    ensure => link,
-    target => "${home}/.config/ngrok/config.yml",
-  }
-
 }
