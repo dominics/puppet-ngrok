@@ -1,9 +1,9 @@
-<%- if @token %>
+<%- if @token -%>
 authtoken: <%= @token %>
-<%- end %>
-<%- unless @update.nil? %>
+<%- end -%>
+<%- unless @update.nil? -%>
 update: <%= @update ? 'true' : 'false' %>
-<%- end %>
-<%- if @web_addr %>
+<%- end -%>
+<%- if @web_addr -%>
 web_addr: <%= @web_addr %>
-<%- end %>
+<%- end -%>
