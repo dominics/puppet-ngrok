@@ -1,5 +1,11 @@
 # Install and configure ngrok.
-class ngrok($dependencies, $url, $home, $token = '') {  # lint:ignore:parameter_defaults
+class ngrok(
+  Array $dependencies,
+  String $url,
+  String $home,
+  Optional[String] $token = ''
+) {  # lint:ignore:parameter_defaults
+  validate_absolute_path($home)
 
   ensure_resource(file, "${home}/.config", { ensure => directory })
 
